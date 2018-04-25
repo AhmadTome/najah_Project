@@ -37,25 +37,34 @@ class electrical extends Controller
     public function store(Request $request)
     {
 
-       $user = new electricalwater;
-       $user->name=Input::get('name');
-       $user->address=Input::get('address');
-       $user->streetname=Input::get('streetname');
-       $user->buildingname=Input::get('buldingname');
-       $user->hod=Input::get('hodnumber');
-       $user->tel=Input::get('telnumber');
-       $user->idperson=Input::get('personid');
-       $user->officedesigner=Input::get('officedesigner');
-       $user->engineer=Input::get('engineer');
-       $user->rebound=Input::get('rebound');
-       $user->note=Input::get('note');
-       $user->attachment=Input::get('attachment');
-        $user->type="electrical";
-        if($user->save() ){
-            session()->flash("notif","تم تقديم طلب خط الكهرباء بنجاح");
-        }else{
-            session()->flash("notif","لم يتم الارسال لحدوث خطأ ما");
+
+
+        $imagcount=1;
+        if($request->hasFile('images')){
+            //return $request->file('images');
+            foreach($request->file('images') as $file) {
+                $ext=$file->getClientOriginalExtension();
+                $date=date('Ymd_His');
+                $imagename =time().'_'.$date.'_'.($imagcount++).'.'.$ext ;
+                $file->move(public_path().'/uploads', $imagename);
+
+                $user=new electricalwater;
+                $user->name=Input::get('name');
+                $user->address=Input::get('address');
+                $user->streetname=Input::get('streetname');
+                $user->buildingname=Input::get('buldingname');
+                $user->hod=Input::get('hodnumber');
+                $user->tel=Input::get('telnumber');
+                $user->idperson=Input::get('personid');
+                $user->note=Input::get('note');
+
+                $user->attachment='/uploads/'.$imagename;
+
+                $user->type="electrical";
+                $user->save();
+            }
         }
+
         return redirect()->to('/electrical_line');
     }
 

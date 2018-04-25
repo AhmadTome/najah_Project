@@ -23,7 +23,7 @@ Route::group(['middleware' => ['auth','preventBackHistory']],function() {
 
 
 
-    Route::get('/compliant', function () {
+   /* Route::get('/compliant', function () {
         return view('user.compliant');
     });
 
@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth','preventBackHistory']],function() {
         return view('user.suggestion');
     });
 
+    /*
     Route::get('/electrical_line', function () {
         return view('user.electricline');
     });
@@ -38,7 +39,7 @@ Route::group(['middleware' => ['auth','preventBackHistory']],function() {
     Route::get('/water_line', function () {
         return view('user.waterline');
     });
-
+*/
     Route::post('savecompliant', 'compliantcontroller@store');
     Route::post('savesuggest', 'suggestioncontroller@store');
     Route::post('saveelictricalline', 'electrical@store');
@@ -46,4 +47,24 @@ Route::group(['middleware' => ['auth','preventBackHistory']],function() {
 
 
 
+});
+
+Route::get('/licenses', function () {
+    return view('tamplate.liceneses');
+});
+
+Route::get('/compliant', function () {
+    return view('tamplate.compliant');
+});
+
+Route::get('/electrical', function () {
+    return view('tamplate.electric');
+});
+
+Route::get('/water', function () {
+    return view('tamplate.water');
+});
+
+Route::get('/suggestion', function () {
+    return view('tamplate.suggestion');
 });
