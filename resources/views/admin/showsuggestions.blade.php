@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>التراخيص</title>
+    <title>عرض الااقتراحات</title>
 
     <link rel="stylesheet" href="css/styles.css">
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
@@ -36,108 +36,50 @@
 </head>
 <body>
 
-    @include('tamplate.navbar')
-
+@include('admin.navbar')
 
 
 <div dir="rtl" class="container-contact100">
     <div class="wrap-contact100">
-        <form class="contact100-form validate-form" enctype="multipart/form-data" method="post" action="saveLicense">
-            {{ csrf_field() }}
-            <div class=" col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="align-content: center;">
 
-                @if(session()->has('notif'))
-                    <div class="row">
-                        <div class="alert alert-success" dir="rtl">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <strong>{{ session('notif') }}</strong>
-                        </div>
-                    </div>
-                @endif
+        @foreach($suggestions as $item)
+            @if($item->kind_cs == "suggestion" && $item->accept == null)
+                <div id="content">
+        <form class="contact100-form validate-form" >
 
-                @yield('content')
-            </div>
-				<span class="contact100-form-title">
-					ترخيص
-				</span>
+            <p class="contact100-form-title">
+                {{$item->title}}
+            </p>
 
-            <div style="float:right;" class="wrap-input100 validate-input bg1" data-validate="يجب ادخال الاسم">
-                <span style=" float:right; font-size:20px;" class="label-input100">* الاسم الرباعي</span>
-                <input class="input100" type="text" name="name" id="name" placeholder="الرجاء ادخال الاسم">
-            </div>
+            <h6 class="contact100-form-title">
+                {{$item->text}}
+				</h6>
 
-            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "يرجى ادخال رقم الهوية">
-                <span style=" float:right; font-size:20px;" class="label-input100">* رقم الهوية</span>
-                <input class="input100" type="text" name="ID" id="ID" placeholder="الرجاء ادخال رقم الهوية">
-            </div>
-
-            <div class="wrap-input100 bg1 rs1-wrap-input100">
-                <span style=" float:right; font-size:20px;" class="label-input100">رقم الهاتف</span>
-                <input class="input100" type="text" name="phone" id="phone" placeholder="الرجاء ادخال رقم الهاتف">
-            </div>
-
-            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
-                <span style=" float:right; font-size:20px;" class="label-input100">اسم الشارع</span>
-                <input class="input100" type="text" name="streetname" id="streetname" placeholder="الرجاء ادخال اسم الشارع">
-            </div>
-
-            <div class="wrap-input100 bg1 rs1-wrap-input100">
-                <span style=" float:right; font-size:20px;" class="label-input100">اسم البناية</span>
-                <input class="input100" type="text" name="buldingname" id="buldingname" placeholder="الرجاء ادخال اسم البناية">
-            </div>
-            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
-                <span style=" float:right; font-size:20px;" class="label-input100">* رقم الحوض</span>
-                <input class="input100" type="text" name="hodnumber" id="hodnumber" placeholder="الرجاء ادخال رقم الحوض">
-            </div>
-
-            <div class="wrap-input100 bg1 rs1-wrap-input100">
-                <span style=" float:right; font-size:20px;" class="label-input100">عنوان السكن</span>
-                <input class="input100" type="text" name="buldingaddress" id="buldingaddress" placeholder="الرجاء ادخال العنوان">
-            </div>
-            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
-                <span style=" float:right; font-size:20px;" class="label-input100">* اسم المكتب المصمم</span>
-                <input class="input100" type="text" name="officename" id="officename" placeholder="الرجاء ادخال اسم المكتب المصمم">
-            </div>
-
-            <div class="wrap-input100 bg1 rs1-wrap-input100">
-                <span style=" float:right; font-size:20px;" class="label-input100">المهندس المشرف</span>
-                <input class="input100" type="text" name="engineerdesigner" id="engineerdesigner" placeholder="الرجاء ادخال اسم المهندس المشرف">
-            </div>
-
-            <div class="wrap-input100 input100-select bg1">
-                <span style=" float:center; font-size:20px;" class="label-input100"> * الارتدادات</span>
-                <div>
-                    <select class="js-select2" name="rebound">
-                        <option value="امامي">امامي</option>
-                        <option value="خلفي"> خلفي</option>
-                        <option value="جانبي">جانبي</option>
-                    </select>
-                    <div class="dropDownSelect2"></div>
-                </div>
-            </div>
-
-
-
-            <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Message">
-                <span style=" float:right; font-size:20px;" class="label-input100">ملاحظات</span>
-                <textarea class="input100" name="note" placeholder="الرجاء كتابة اي ملاحظة"></textarea>
-            </div>
-
-            <div class="wrap-input100 validate-input bg1">
-                <span style=" float:right; font-size:20px;" class="label-input100">مرفقات</span>
-                <input class="form-control image" type="file" name="images[]" id="images" value="اختيار الصور"  multiple />
-            </div>
-
-            <div class="container-contact100-form-btn">
-                <button class="contact100-form-btn" type="submit">
+            <div class="container-contact100-form-btn1">
+                <button  style="background-color: #ff5050;" class="contact100-form-btn reject" data-id="{{$item->id}}" data-user="{{$item->user_id}}">
 						<span>
-							ارسال	<i class="fa m-l-7" aria-hidden="true"></i>
+							رفض	<i class="fa m-l-7" aria-hidden="true"></i>
 							<i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
 
 						</span>
                 </button>
             </div>
+            <div class="container-contact100-form-btn1">
+                <button  class="contact100-form-btn accept" data-id="{{$item->id}}" data-user="{{$item->user_id}}">
+						<span>
+							قبول	<i class="fa m-l-7" aria-hidden="true"></i>
+							<i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
+
+						</span>
+                </button>
+            </div>
+
         </form>
+                </div>
+                <hr style="margin-top: 50px;border-width: 3px;">
+
+            @endif
+            @endforeach
     </div>
 </div>
 
@@ -218,3 +160,52 @@
 
 </body>
 </html>
+<script>
+    $(document).ready(function () {
+
+
+
+        $(".reject").on('click',function() {
+            $(this).each(function() {
+
+                var id= $(this).data('id');
+
+                $.ajax({
+                    type:'get',
+                    url:'{!!URL::to('rejectsuggestion')!!}',
+                    data:{'id':id},
+                    success:function(data) {
+
+                    },
+                    async: false
+
+                });
+
+
+            });
+
+            });
+
+        $(".accept").on('click',function() {
+            $(this).each(function() {
+
+                var id= $(this).data('id');
+
+                $.ajax({
+                    type:'get',
+                    url:'{!!URL::to('acceptsuggestion')!!}',
+                    data:{'id':id},
+                    success:function(data) {
+
+                    },
+                    async: false
+
+                });
+
+            });
+
+        });
+
+
+    });
+</script>

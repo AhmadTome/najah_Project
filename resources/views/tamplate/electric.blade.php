@@ -44,6 +44,19 @@
     <div class="wrap-contact100">
         <form class="contact100-form validate-form" enctype="multipart/form-data" method="post" action="saveelictricalline" id="uploadeform">
             {{ csrf_field() }}
+            <div class=" col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="align-content: center;">
+
+                @if(session()->has('notif'))
+                    <div class="row">
+                        <div class="alert alert-success" dir="rtl">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>{{ session('notif') }}</strong>
+                        </div>
+                    </div>
+                @endif
+
+                @yield('content')
+            </div>
 				<span class="contact100-form-title">
 					خط كهرباء
 				</span>
@@ -90,7 +103,7 @@
 
             <div class="wrap-input100 validate-input bg1">
                 <span style=" float:right; font-size:20px;" class="label-input100">مرفقات</span>
-                <input class="form-control image" type="file" name="images[]" id="images" value="اختيار الصور"   />
+                <input class="form-control image" type="file" name="images[]" id="images" value="اختيار الصور"  multiple />
             </div>
 
 

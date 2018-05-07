@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\electricalwater;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
 class electrical extends Controller
@@ -36,9 +37,7 @@ class electrical extends Controller
      */
     public function store(Request $request)
     {
-
-
-
+        session(['user_id' => Auth::user()->id]);
         $imagcount=1;
         if($request->hasFile('images')){
             //return $request->file('images');
@@ -61,33 +60,96 @@ class electrical extends Controller
                 $user->attachment='/uploads/'.$imagename;
 
                 $user->type="electrical";
-                $user->save();
+                $user->userid=session('user_id');
+                if($user->save() ){
+                    session()->flash("notif","تم تقديم طلب خط الكهرباء بنجاح");
+                }else{
+                    session()->flash("notif","لم يتم الارسال لحدوث خطأ ما");
+                }
+            }
+        }else{
+            $user=new electricalwater;
+            $user->name=Input::get('name');
+            $user->address=Input::get('address');
+            $user->streetname=Input::get('streetname');
+            $user->buildingname=Input::get('buldingname');
+            $user->hod=Input::get('hodnumber');
+            $user->tel=Input::get('telnumber');
+            $user->idperson=Input::get('personid');
+            $user->note=Input::get('note');
+
+            $user->attachment='';
+
+            $user->type="electrical";
+            $user->userid=session('user_id');
+            if($user->save() ){
+                session()->flash("notif","تم تقديم طلب خط الكهرباء بنجاح");
+            }else{
+                session()->flash("notif","لم يتم الارسال لحدوث خطأ ما");
             }
         }
 
-        return redirect()->to('/electrical_line');
+        return redirect()->to('/electrical');
     }
 
 
     public function storewater(Request $request){
-        $user = new electricalwater;
-        $user->name=Input::get('name');
-        $user->address=Input::get('address');
-        $user->streetname=Input::get('streetname');
-        $user->buildingname=Input::get('buldingname');
-        $user->hod=Input::get('hodnumber');
-        $user->tel=Input::get('telnumber');
-        $user->idperson=Input::get('personid');
-        $user->note=Input::get('note');
-        $user->attachment=Input::get('attachment');
-        $user->type="water";
+        session(['user_id' => Auth::user()->id]);
+        $imagcount=1;
+        if($request->hasFile('images')){
+            //return $request->file('images');
+            foreach($request->file('images') as $file) {
+                $ext=$file->getClientOriginalExtension();
+                $date=date('Ymd_His');
+                $imagename =time().'_'.$date.'_'.($imagcount++).'.'.$ext ;
+                $file->move(public_path().'/uploads', $imagename);
 
-        if($user->save() ){
-            session()->flash("notif","تم تقديم طلب خط المياه بنجاح");
+                $user = new electricalwater;
+                $user->name=Input::get('name');
+                $user->address=Input::get('address');
+                $user->streetname=Input::get('streetname');
+                $user->buildingname=Input::get('buldingname');
+                $user->hod=Input::get('hodnumber');
+                $user->tel=Input::get('telnumber');
+                $user->idperson=Input::get('personid');
+                $user->note=Input::get('note');
+                $user->type="water";
+                $user->userid=session('user_id');
+                $user->attachment='/uploads/'.$imagename;
+
+
+                if($user->save() ){
+                    session()->flash("notif","تم تقديم طلب خط المياه بنجاح");
+                }else{
+                    session()->flash("notif","لم يتم الارسال لحدوث خطأ ما");
+                }
+
+            }
         }else{
-            session()->flash("notif","لم يتم الارسال لحدوث خطأ ما");
+            $user = new electricalwater;
+            $user->name=Input::get('name');
+            $user->address=Input::get('address');
+            $user->streetname=Input::get('streetname');
+            $user->buildingname=Input::get('buldingname');
+            $user->hod=Input::get('hodnumber');
+            $user->tel=Input::get('telnumber');
+            $user->idperson=Input::get('personid');
+            $user->note=Input::get('note');
+            $user->type="water";
+            $user->userid=session('user_id');
+            $user->attachment='';
+
+
+            if($user->save() ){
+                session()->flash("notif","تم تقديم طلب خط المياه بنجاح");
+            }else{
+                session()->flash("notif","لم يتم الارسال لحدوث خطأ ما");
+            }
         }
-        return redirect()->to('/water_line');
+
+
+
+        return redirect()->to('/water');
     }
     /**
      * Display the specified resource.
@@ -132,5 +194,26 @@ class electrical extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function rejectpost(Request $request){
+
+        electricalwater::where('idelecrtic_water_line', '=', $request->id)
+            ->update(array('accept' =>"reject"));
+    }
+    public function acceptpost(Request $request){
+
+        electricalwater::where('idelecrtic_water_line', '=', $request->id)
+            ->update(array('accept' =>"accept"));
+    }
+    public function rejectelectricalpost(Request $request){
+
+        electricalwater::where('idelecrtic_water_line', '=', $request->id)
+            ->update(array('accept' =>"reject"));
+    }
+    public function acceptelectricalpost(Request $request){
+
+        electricalwater::where('idelecrtic_water_line', '=', $request->id)
+            ->update(array('accept' =>"accept"));
     }
 }

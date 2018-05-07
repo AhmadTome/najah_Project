@@ -41,23 +41,37 @@
 
 <div dir="rtl" class="container-contact100">
     <div class="wrap-contact100">
-        <form class="contact100-form validate-form">
+        <form class="contact100-form validate-form" method="post" action="savesuggest">
+            {{ csrf_field() }}
+            <div class=" col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="align-content: center;">
+
+                @if(session()->has('notif'))
+                    <div class="row">
+                        <div class="alert alert-success" dir="rtl">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>{{ session('notif') }}</strong>
+                        </div>
+                    </div>
+                @endif
+
+                @yield('content')
+            </div>
 				<span class="contact100-form-title">
 					اقتراح
 				</span>
 
             <div style="float:right;" class="wrap-input100 validate-input bg1" data-validate="يجب ادخال عنوان الشكوى">
                 <span style=" float:right; font-size:20px;" class="label-input100">* عنوان الاقتراح</span>
-                <input class="input100" type="text" name="name" placeholder="الرجاء ادخال عنوان الاقتراح">
+                <input class="input100" type="text" name="suggest_title" id="suggest_title"  placeholder="الرجاء ادخال عنوان الاقتراح">
             </div>
 
             <div class="wrap-input100 input100-select bg1">
                 <span style=" float:center; font-size:20px;" class="label-input100"> * نوع الاقتراح</span>
                 <div>
-                    <select class="js-select2" name="service">
-                        <option>مياه</option>
-                        <option> طرق</option>
-                        <option>كهرباء</option>
+                    <select class="js-select2" id="suggest_select" name="suggest_select">
+                        <option value="مياه">مياه</option>
+                        <option value="طرق"> طرق</option>
+                        <option value="كهرباء">كهرباء</option>
                     </select>
                     <div class="dropDownSelect2"></div>
                 </div>
@@ -66,12 +80,12 @@
 
 
             <div class="wrap-input100 validate-input bg0 rs1-alert-validate" >
-                <span style=" float:right; font-size:20px;" class="label-input100">ملاحظات</span>
-                <textarea class="input100" name="message" placeholder="الرجاء كتابة اي ملاحظة"></textarea>
+                <span style=" float:right; font-size:20px;" class="label-input100">نص الاقتراح</span>
+                <textarea class="input100" name="suggest_text" id="suggest_text" placeholder="الرجاء كتابة الاقتراح"></textarea>
             </div>
 
             <div class="container-contact100-form-btn">
-                <button class="contact100-form-btn">
+                <button class="contact100-form-btn" type="submit">
 						<span>
 							ارسال	<i class="fa m-l-7" aria-hidden="true"></i>
 							<i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>

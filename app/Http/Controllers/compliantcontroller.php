@@ -98,4 +98,14 @@ class compliantcontroller extends Controller
     {
         //
     }
+    public function rejectpost(Request $request){
+
+        complian_suggestion::where('id', '=', $request->id)
+            ->update(array('accept' =>"reject"));
+    }
+    public function acceptpost(Request $request){
+
+        complian_suggestion::where('id', '=', $request->id)
+            ->update(array('accept' =>"accept"));
+    }
 }

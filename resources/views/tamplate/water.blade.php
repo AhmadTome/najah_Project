@@ -42,58 +42,72 @@
 
 <div dir="rtl" class="container-contact100">
     <div class="wrap-contact100">
-        <form class="contact100-form validate-form">
+        <form class="contact100-form validate-form" enctype="multipart/form-data" method="post" action="savewaterline">
+            {{ csrf_field() }}
+            <div class=" col-lg-12 col-md-12 col-xs-12 col-sm-12 " style="align-content: center;">
+
+                @if(session()->has('notif'))
+                    <div class="row">
+                        <div class="alert alert-success" dir="rtl">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <strong>{{ session('notif') }}</strong>
+                        </div>
+                    </div>
+                @endif
+
+                @yield('content')
+            </div>
 				<span class="contact100-form-title">
 					خط مياه
 				</span>
 
             <div style="float:right;" class="wrap-input100 validate-input bg1" data-validate="يرجى ادخال الاسم">
                 <span style=" float:right; font-size:20px;" class="label-input100">* الاسم الرباعي</span>
-                <input class="input100" type="text" name="name" placeholder="الرجاء ادخال الاسم">
+                <input class="input100" type="text" name="name" id="name" placeholder="الرجاء ادخال الاسم">
             </div>
 
             <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "يرجى ادخال رقم الهوية">
                 <span style=" float:right; font-size:20px;" class="label-input100">* رقم الهوية</span>
-                <input class="input100" type="text" name="email" placeholder="الرجاء ادخال رقم الهوية">
+                <input class="input100" type="text" id="personid" name="personid" placeholder="الرجاء ادخال رقم الهوية">
             </div>
 
             <div class="wrap-input100 bg1 rs1-wrap-input100">
                 <span style=" float:right; font-size:20px;" class="label-input100">رقم الهاتف</span>
-                <input class="input100" type="text" name="phone" placeholder="الرجاء ادخال رقم الهاتف">
+                <input class="input100" type="text" id="telnumber" name="telnumber" placeholder="الرجاء ادخال رقم الهاتف">
             </div>
 
             <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" >
                 <span style=" float:right; font-size:20px;" class="label-input100">اسم الشارع</span>
-                <input class="input100" type="text" name="email" placeholder="الرجاء ادخال اسم الشارع">
+                <input class="input100" type="text" name="streetname" id="streetname" placeholder="الرجاء ادخال اسم الشارع">
             </div>
 
             <div class="wrap-input100 bg1 rs1-wrap-input100">
                 <span style=" float:right; font-size:20px;" class="label-input100">اسم البناية</span>
-                <input class="input100" type="text" name="phone" placeholder="الرجاء ادخال اسم البناية">
+                <input class="input100" type="text" id="buldingname" name="buldingname" placeholder="الرجاء ادخال اسم البناية">
             </div>
             <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
                 <span style=" float:right; font-size:20px;" class="label-input100">* رقم الحوض</span>
-                <input class="input100" type="text" name="email" placeholder="الرجاء ادخال رقم الحوض">
+                <input class="input100" type="text" name="hodnumber" id="hodnumber" placeholder="الرجاء ادخال رقم الحوض">
             </div>
 
             <div class="wrap-input100 bg1 rs1-wrap-input100">
                 <span style=" float:right; font-size:20px;" class="label-input100">عنوان السكن</span>
-                <input class="input100" type="text" name="phone" placeholder="الرجاء ادخال العنوان">
+                <input class="input100" type="text"  name="address" id="address" placeholder="الرجاء ادخال العنوان">
             </div>
 
 
             <div class="wrap-input100 validate-input bg0 rs1-alert-validate" >
                 <span style=" float:right; font-size:20px;" class="label-input100">ملاحظات</span>
-                <textarea class="input100" name="message" placeholder="الرجاء كتابة اي ملاحظة"></textarea>
+                <textarea class="input100" name="note" id="note" placeholder="الرجاء كتابة اي ملاحظة"></textarea>
             </div>
 
-            <div class="wrap-input100 validate-input bg1" >
+            <div class="wrap-input100 validate-input bg1">
                 <span style=" float:right; font-size:20px;" class="label-input100">مرفقات</span>
-                <input class="input100" type="text" name="name" placeholder="">
+                <input class="form-control image" type="file" name="images[]" id="images" value="اختيار الصور"  multiple />
             </div>
 
             <div class="container-contact100-form-btn">
-                <button class="contact100-form-btn">
+                <button class="contact100-form-btn" type="submit">
 						<span>
 							ارسال	<i class="fa m-l-7" aria-hidden="true"></i>
 							<i class="fa fa-long-arrow-left m-l-7" aria-hidden="true"></i>
