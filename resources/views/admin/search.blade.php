@@ -41,22 +41,26 @@
 
 @include('admin.navbar')
 
-
+<form method="post" action="search">
 <div class="container">
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2">
             <div class="input-group">
 
                 <input type="hidden" name="search_param" value="all" id="search_param">
-                <input type="text" class="form-control" name="x" placeholder="Search term...">
+                <input type="text" class="form-control" name="valuetosearch" placeholder="Search term...">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
             </div>
         </div>
     </div>
 </div>
-<div dir="rtl" class="container-contact100">
+
+
+
+    {{ csrf_field() }}
+    <div dir="rtl" class="container-contact100">
     <div class="wrap-contact100">
 
     <div class="container">
@@ -93,7 +97,7 @@
 
     </div>
 </div>
-
+</form>
 
 
 <!--===============================================================================================-->

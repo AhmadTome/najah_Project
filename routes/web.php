@@ -130,7 +130,10 @@ Auth::routes();
         return view('admin.search')->with('cs',$cs);
     });
 
-    Route::get('/index',function (){
+    Route::post('search', 'searchController@search');
+
+
+Route::get('/index',function (){
        return view('index');
     });
 //});

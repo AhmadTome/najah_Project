@@ -1,7 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login V15</title>
+    <title>Login </title>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -27,9 +30,15 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/main_index.css') }}">
     <!--===============================================================================================-->
 </head>
-<body>
 
+<body>
+<!-- <div id='cssmenu' dir="rtl">
+    
+        <li><a href='{{asset('register')}}'>تسجيل حساب جديد</a></li>
+    </ul>
+</div> -->
 <div class="limiter" dir="rtl">
+
     <div class="container-login100">
         <div class="wrap-login100">
             <div class="login100-form-title" style="background-image:url('/images/bg-01_index.jpg'); ">

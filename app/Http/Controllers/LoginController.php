@@ -16,9 +16,11 @@ class LoginController extends Controller
         $password = Input::get('pass');
 
         if (Auth::attempt(array('email' => $username, 'password' => $password , 'admin'=>0))){
+            session(['user_id' => Auth::user()->id]);
             return redirect()->to('/suggestion');
         }
         else if (Auth::attempt(array('email' => $username, 'password' => $password , 'admin'=>1))){
+            session(['user_id' => Auth::user()->id]);
             return redirect()->to('/report');
         }
         else {
