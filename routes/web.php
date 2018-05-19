@@ -11,14 +11,14 @@
 |
 */
 Route::get('/', function () {
-    return view('auth.login');
+    return view('index');
 });
 Route::get('/login', function () {
     return view('auth.login');
 });
 
 Auth::routes();
-Route::group(['middleware' => ['auth','preventBackHistory']],function() {
+//Route::group(['middleware' => ['auth','preventBackHistory']],function() {
     Route::get('/home', function (){
         return view('tamplate.compliant');
     });
@@ -65,6 +65,18 @@ Route::group(['middleware' => ['auth','preventBackHistory']],function() {
         return view('tamplate.suggestion');
     });
 
+    Route::get('/my_request', function () {
+        $user_id=session('user_id');
+        $electrical_water=\App\electricalwater::select('accept','type','address')->where('userid',$user_id)->take(1500)->get();
+        $cs=\App\complian_suggestion::select('title','type','kind_cs','accept')->where('user_id',$user_id)->take(1500)->get();
+        $count =1;
+
+        return view('tamplate.myrequest')
+            ->with('cs',$cs)->with('count',$count)->with('electrical_water',$electrical_water);
+    });
+
+
+    Route::post('sign_in', 'LoginController@signin');
     Route::post('savecompliant', 'compliantcontroller@store');
     Route::post('savesuggest', 'suggestioncontroller@store');
     Route::post('saveelictricalline', 'electrical@store');
@@ -112,5 +124,14 @@ Route::group(['middleware' => ['auth','preventBackHistory']],function() {
         return view('admin.report')->with('cs',$cs)->with('count',$count);
     });
 
-});
+    Route::get('/search', function () {
+        $cs = \App\complian_suggestion::all();
+
+        return view('admin.search')->with('cs',$cs);
+    });
+
+    Route::get('/index',function (){
+       return view('index');
+    });
+//});
 
