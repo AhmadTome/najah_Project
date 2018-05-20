@@ -4,6 +4,7 @@
         <li><a href='{{asset('showcompliant')}}'>عرض الشكاوي</a></li>
         <li><a href='{{asset('show_water_Request')}}'>عرض طلبات خطوط المياه</a></li>
         <li><a href='{{asset('show_electrical_request')}}'>عرض طلبات خطوط الكهرباء</a></li>
+        <li><a href='{{asset('search')}}'>بحث</a></li>
         <li><a href='{{asset('report')}}'>تقرير</a></li>
         <li style="float:left;"><a href='{{ route('logout') }}'  onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">تسجيل خروج</a></li>

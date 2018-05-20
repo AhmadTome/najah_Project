@@ -32,11 +32,7 @@
 </head>
 
 <body>
-<!-- <div id='cssmenu' dir="rtl">
-    
-        <li><a href='{{asset('register')}}'>تسجيل حساب جديد</a></li>
-    </ul>
-</div> -->
+
 <div class="limiter" dir="rtl">
 
     <div class="container-login100">
@@ -64,6 +60,11 @@
                         تسجيل الدخول
                     </button>
                 </div>
+
+                <div class="container-login100-form-btn" style="margin-right: 40px;">
+                    <a href='{{asset('register')}}'>تسجيل حساب جديد</a>
+                </div>
+
             </form>
         </div>
     </div>
